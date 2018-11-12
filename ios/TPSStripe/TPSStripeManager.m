@@ -291,20 +291,12 @@ RCT_EXPORT_METHOD(createSourceWithParams:(NSDictionary *)params
     }
     if ([sourceType isEqualToString:@"wechat"]) {
             sourceParams = [[STPSourceParams alloc] init];
-            sourceParams.type = @"wechat";
+            sourceParams.additionalAPIParameters = @{
+                @"type": @"wechat",
+            }
             sourceParams.amount = @(amount);
             sourceParams.currency = currency;
             sourceParams.redirect = @{ @"return_url": returnURL };
-            NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
-            NSString *versionKey = [NSBundle stp_applicationVersion];
-            if (bundleID && versionKey) {
-                sourceParams.additionalAPIParameters = @{
-                                                        @"wechat": @{
-                                                                @"app_bundle_id": bundleID,
-                                                                @"app_version_key": versionKey,
-                                                            },
-                                                        };
-            }
     }
 
     STPAPIClient* stripeAPIClient = [self newAPIClient];
