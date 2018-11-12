@@ -274,6 +274,13 @@ public class StripeModule extends ReactContextBaseJavaModule {
             options.getString("returnURL"),
             options.getString("card"));
         break;
+      case "wechat":
+        sourceParams = new SourceParams()
+                .setType("wechat")
+                .setCurrency(currency)
+                .setAmount(amount)
+                .setRedirect(createSimpleMap(FIELD_RETURN_URL, returnUrl));
+        break;
     }
 
     ArgCheck.nonNull(sourceParams);
