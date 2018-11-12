@@ -289,6 +289,15 @@ RCT_EXPORT_METHOD(createSourceWithParams:(NSDictionary *)params
     if ([sourceType isEqualToString:@"alipay"]) {
             sourceParams = [STPSourceParams alipayParamsWithAmount:[[params objectForKey:@"amount"] unsignedIntegerValue] currency:params[@"currency"] returnURL:params[@"returnURL"]];
     }
+    if ([sourceType isEqualToString:@"wechat"]) {
+            sourceParams = [[STPSourceParams alloc] init];
+            sourceParams.additionalAPIParameters = @{
+                                                     @"type": @"wechat",
+                                                     @"amount": [[params objectForKey:@"amount"] unsignedIntegerValue],
+                                                     @"currency": params[@"currency"],
+                                                     @"returnURL": params[@"returnURL"],
+                                                     };
+    }
 
     STPAPIClient* stripeAPIClient = [self newAPIClient];
 
